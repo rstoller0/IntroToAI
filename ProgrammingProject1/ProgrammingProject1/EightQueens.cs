@@ -8,65 +8,76 @@ namespace ProgrammingProject1
 {
     class EightQueens {
 
-        //Create 2D Array for game board
-        private static int[,] board = new int[8, 8];
+        public static void Main(string[] args)
+        {
 
-        public static void Main(string[] args) {
-            
             //create initial state
-            RandomRestart();
+            State current = new State();
+            State neighbor = new State(current);
+            State bestNewState = new State(current);
+            int numBetterStates = 0;
+
+            //variables for end display
+            int numStateChanges = 0;
+            int numRestarts = 0;
 
             //print initial state
-            PrintState();
+            current.printState();
+
+            //print heuristic value
+            Console.WriteLine("Heuristic Value of State: " + current.getHeuristic());
+
+            while (current.getHeuristic() > 0) {
+
+                //print initial state
+                Console.WriteLine("Current heuristic: " + current.getHeuristic());
+                current.printState();
+
+                //resetting states for testing
+                neighbor.newState(current);
+                bestNewState.newState(current);
+                numBetterStates = 0;
+
+                for (int c = 0; c < 8; c++) {
+
+                    for (int r = 0; r < 8; r++) {
+                        neighbor.setState(r, c);
+
+                        if (neighbor.getHeuristic() < current.getHeuristic())
+                        {
+                            numBetterStates++;
+                        }
+
+                        if (neighbor.getHeuristic() < bestNewState.getHeuristic())
+                        {
+                            bestNewState.setState(r, c);
+                            numStateChanges++;
+                        }
+                    }
+                }
+
+                if (bestNewState.getHeuristic() < current.getHeuristic()) {
+                    current.newState(bestNewState);
+                    Console.WriteLine("Neighbors found with lower heuristic: " + numBetterStates);
+                    Console.WriteLine("Setting new current state");
+                } else {
+                    current.randomRestart();
+                    Console.WriteLine("RESTART");
+                    numRestarts++;
+                    numStateChanges = 0;
+                }
+
+                //blankline
+                Console.WriteLine();
+            }
+
+            current.printState();
+            Console.WriteLine("Solution Found!");
+            Console.WriteLine("State Changes: " + numStateChanges);
+            Console.WriteLine("Restarts: " + numRestarts);
 
             //pause console
             Console.ReadLine();
         }
-
-        private static void RandomRestart() {
-
-            //Create Random Number Generator
-            Random rng = new Random();
-
-            //assign each space to empty or queens
-            for (int c = 0; c < 8; c++) {//column
-                
-                //generate random number
-                int randomSpace = rng.Next(0, 7);
-
-                for (int r = 0; r < 8; r++) {//all rows in each column
-                    
-                    if (r == randomSpace) {
-
-                        board[r, c] = 1;
-                    }
-                    else {
-
-                        board[r, c] = 0;
-                    }
-                }
-            }
-        }
-
-        private static void PrintState() {
-
-            for (int r = 0; r < 8; r++) {//row
-
-                for (int c = 0; c < 8; c++) {//all columns on each row
-
-                    Console.Write(board[r, c]);
-
-                    if (c < 7) {//add comma until final column for each row
-
-                        Console.Write(", ");
-                    }
-                }
-
-                //move to next line
-                Console.WriteLine();
-            }
-        }
-
-
     }
 }
