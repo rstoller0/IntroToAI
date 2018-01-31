@@ -11,7 +11,7 @@ namespace ProgrammingProject1
         public static void Main(string[] args)
         {
 
-            //create initial state
+            //create initial state and additional variables
             State current = new State();
             State neighbor = new State(current);
             State bestNewState = new State(current);
@@ -21,13 +21,7 @@ namespace ProgrammingProject1
             int numStateChanges = 0;
             int numRestarts = 0;
 
-            //print initial state
-            current.printState();
-
-            //print heuristic value
-            Console.WriteLine("Heuristic Value of State: " + current.getHeuristic());
-
-            while (current.getHeuristic() > 0) {
+            while (current.getHeuristic() > 0) {//while not the GOAL STATE
 
                 //print initial state
                 Console.WriteLine("Current heuristic: " + current.getHeuristic());
@@ -39,28 +33,33 @@ namespace ProgrammingProject1
                 numBetterStates = 0;
 
                 for (int c = 0; c < 8; c++) {
+                    //reset neighbor state to current before next column is checked
+                    neighbor.newState(current);
 
                     for (int r = 0; r < 8; r++) {
+                        //start checking heuristics of each column
                         neighbor.setState(r, c);
 
-                        if (neighbor.getHeuristic() < current.getHeuristic())
-                        {
+                        if (neighbor.getHeuristic() < current.getHeuristic()) {
+                            //if neighbor state's heuristic is lower than initial state, add to number of better states
                             numBetterStates++;
                         }
 
-                        if (neighbor.getHeuristic() < bestNewState.getHeuristic())
-                        {
-                            bestNewState.setState(r, c);
-                            numStateChanges++;
+                        if (neighbor.getHeuristic() < bestNewState.getHeuristic()) {
+                            //if neighbor state's heuristic is lower than the best possible new state found thus far, change best possible new state to neighbor state
+                            bestNewState.newState(neighbor);
                         }
                     }
                 }
 
                 if (bestNewState.getHeuristic() < current.getHeuristic()) {
+                    //if better new state is found, assign to current state
                     current.newState(bestNewState);
                     Console.WriteLine("Neighbors found with lower heuristic: " + numBetterStates);
                     Console.WriteLine("Setting new current state");
+                    numStateChanges++;
                 } else {
+                    //else no better state found, restart
                     current.randomRestart();
                     Console.WriteLine("RESTART");
                     numRestarts++;
@@ -71,6 +70,7 @@ namespace ProgrammingProject1
                 Console.WriteLine();
             }
 
+            //print information about solution discovery
             current.printState();
             Console.WriteLine("Solution Found!");
             Console.WriteLine("State Changes: " + numStateChanges);
