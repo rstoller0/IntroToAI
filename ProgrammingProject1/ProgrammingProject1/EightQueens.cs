@@ -57,13 +57,13 @@ namespace ProgrammingProject1
                     current.newState(bestNewState);
                     Console.WriteLine("Neighbors found with lower heuristic: " + numBetterStates);
                     Console.WriteLine("Setting new current state");
-                    numStateChanges++;
+                    numStateChanges++;//add to state changes
                 } else {
                     //else no better state found, restart
                     current.randomRestart();
                     Console.WriteLine("RESTART");
-                    numRestarts++;
-                    numStateChanges = 0;
+                    numRestarts++;//add the restarts
+                    numStateChanges++;//counting the random restart as a state change as well
                 }
 
                 //blankline
