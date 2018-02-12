@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace ProgrammingProject2
 {
-    class Node {
+    public class Node {
         private int row, col, f, g, h, type;
         private Node parent;
+        private bool isPath;
 
         public Node(int r, int c, int t) {
             row = r;
             col = c;
             type = t;
             parent = null;
+            isPath = false;
             //type 0 is traverseable, 1 is not
         }
 
@@ -30,6 +32,9 @@ namespace ProgrammingProject2
         }
         public void setParent(Node n) {
             parent = n;
+        }
+        public void setIsPath(bool p) {
+            isPath = p;
         }
 
         //accessor methods to get values
@@ -51,6 +56,9 @@ namespace ProgrammingProject2
         public int getCol() {
             return col;
         }
+        public int getType() {
+            return type;
+        }
 
         public bool equals(Object inn) {
             //typecast to Node
@@ -61,6 +69,7 @@ namespace ProgrammingProject2
 
         public void displayTile() {
             String message = row + "," + col;
+
             if (type == 1) {
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -74,8 +83,38 @@ namespace ProgrammingProject2
             }
         }
 
+        public void displayTileWithPathway()
+        {
+            String message = row + "," + col;
+
+            if(isPath == true) {
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(message.PadLeft(6));//to keep a square board
+                Console.ResetColor();
+            } else if (type == 1) {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write(message.PadLeft(6));//to keep a square board
+                Console.ResetColor();
+            } else {
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write(message.PadLeft(6));//to keep a square board
+                Console.ResetColor();
+            }
+        }
+
         public String toString() {
-            return "Node: " + row + "_" + col;
+            string toStr = "Node: ".PadRight(6) + (row + "_" + col).PadRight(5) + " F: ".PadRight(4) + ("" + f).PadRight(4)
+                + " G: ".PadRight(4) + ("" + g).PadRight(4) + " H: ".PadRight(4) + ("" + h).PadRight(4) + " Parent: ".PadRight(9);
+            if (parent == null) {
+                toStr += "Null".PadRight(4);
+            } else {
+                toStr += ("" + parent.getRow() + "_" + parent.getCol()).PadRight(5);
+            }
+
+            return toStr;
         }
 
     }
