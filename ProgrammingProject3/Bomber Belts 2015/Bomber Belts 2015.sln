@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bomber Belts 2015", "Bomber Belts 2015.csproj", "{CE86C97C-B2B3-48EB-B023-453CDE1C2F8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bomber Belts 2015.Editor", "Bomber Belts 2015.Editor.csproj", "{6F84F8B4-88A8-324F-95DD-5D8B72666379}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE86C97C-B2B3-48EB-B023-453CDE1C2F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE86C97C-B2B3-48EB-B023-453CDE1C2F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE86C97C-B2B3-48EB-B023-453CDE1C2F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE86C97C-B2B3-48EB-B023-453CDE1C2F8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F84F8B4-88A8-324F-95DD-5D8B72666379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F84F8B4-88A8-324F-95DD-5D8B72666379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F84F8B4-88A8-324F-95DD-5D8B72666379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F84F8B4-88A8-324F-95DD-5D8B72666379}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
