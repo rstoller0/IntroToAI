@@ -17,7 +17,7 @@ public class AI_Sample : MonoBehaviour {
 
         if (mainScript == null)
         {
-            print("No CharacterScript found on " + gameObject.name);
+            //print("No CharacterScript found on " + gameObject.name);
             this.enabled = false;
         }
 
@@ -38,12 +38,12 @@ public class AI_Sample : MonoBehaviour {
         int minIndex = 0;
         float curDistance;
 
-		print ("RED BUTTON COOLDOWNS");
+		//print ("RED BUTTON COOLDOWNS");
 		float[] t = mainScript.getButtonCooldowns ();
 		for (int i = 0; i < t.Length; i++) {
-			print (t [i]);
+			//print (t [i]);
 		}
-		print ("----------------");
+		//print ("----------------");
 
 
         for (int i = 0; i < beltDirections.Length; i++)
