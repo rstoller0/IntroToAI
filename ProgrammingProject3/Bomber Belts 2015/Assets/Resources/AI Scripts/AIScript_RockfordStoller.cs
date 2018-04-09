@@ -89,28 +89,41 @@ public class AIScript_RockfordStoller : MonoBehaviour {
             float bombTime = bombDistances[i] / bombSpeeds[i];
 
             if (currentTime > bombTime) {//if the bomb/belt being checked is more dangerous than the previous bombs/belts
-                currentTime = bombTime;//set new most dangerous bomb/belt time
-                targetButton = i;//set new most dangerous bomb/belt index
+                    currentTime = bombTime;//set new most dangerous bomb/belt time
+                    targetButton = i;//set new most dangerous bomb/belt index
             }
         }
+
+        if (enemyBombs == 0) {//if no active enemy bombs/belts
+            if (buttonLocations[currentIndex] < 4 && beltDirections[currentIndex] == 1) {//if low on the board and already pressed bomb/belt standing on, shift target up 1
+                targetButton = currentIndex + 1;
+            } else if (buttonLocations[currentIndex] >= 4 && beltDirections[currentIndex] == 1) {//if high on the board and already pressed bomb/belt standing on, shift target down 1
+                targetButton = currentIndex - 1;
+            }
+        }
+
         #region testing not using push along the way
         /*
-        float mostDangerousBombTime = bombDistances[targetButton] / bombSpeeds[targetButton];
-
-        if (buttonLocations[targetButton] < 7) {//if the target is not the top bomb/belt
-            if (beltDirections[targetButton + 1] != 1) {//if bomb/belt above target is not pressed by AI character
-                if (mostDangerousBombTime > (Mathf.Abs(mainScript.getCharacterLocation() - buttonLocations[targetButton + 1]) / playerSpeed) + playerPressCooldownTime + (Mathf.Abs(buttonLocations[targetButton + 1] - buttonLocations[targetButton]) / playerSpeed)) {
-                    //AND if there is enough time to go above the original target bomb/belt and press that button and then return to the original target bomb/belt
-                    targetButton += 1;
-                }
-            }
+        if(enemyBombs == 0) {//if no enemy bombs/belts active
+            targetButton = currentIndex;
         }
 
-        if (buttonLocations[targetButton] > 0) {//if the target is not the bottom bomb/belt
-            if (beltDirections[targetButton - 1] != 1) {//if bomb/belt below target is not pressed by AI character
-                if (mostDangerousBombTime > (Mathf.Abs(mainScript.getCharacterLocation() - buttonLocations[targetButton - 1]) / playerSpeed) + playerPressCooldownTime + (Mathf.Abs(buttonLocations[targetButton - 1] - buttonLocations[targetButton]) / playerSpeed)) {
-                    //AND if there is enough time to go below the original target bomb/belt and press that button and then return to the original target bomb/belt
-                    targetButton -= 1;
+        float mostDangerousBombTime = bombDistances[targetButton] / bombSpeeds[targetButton];
+
+        if (buttonLocations[targetButton] < 7 && buttonLocations[targetButton] > 0) {//if the target is not the top or bottom bomb/belt
+            if (buttonLocations[targetButton] > mainScript.getCharacterLocation()) {//if target is above AI character
+                if (beltDirections[targetButton + 1] != 1) {//if bomb/belt above target is not pressed by AI character
+                    if (mostDangerousBombTime > (Mathf.Abs(mainScript.getCharacterLocation() - buttonLocations[targetButton + 1]) / playerSpeed) + playerPressCooldownTime + (Mathf.Abs(buttonLocations[targetButton + 1] - buttonLocations[targetButton]) / playerSpeed)) {
+                        //AND if there is enough time to go above the original target bomb/belt and press that button and then return to the original target bomb/belt
+                        targetButton += 1;
+                    }
+                }
+            } else if (buttonLocations[targetButton] < mainScript.getCharacterLocation()) {//else if target is below AI character
+                if (beltDirections[targetButton - 1] != 1) {//if bomb/belt below target is not pressed by AI character
+                    if (mostDangerousBombTime > (Mathf.Abs(mainScript.getCharacterLocation() - buttonLocations[targetButton - 1]) / playerSpeed) + playerPressCooldownTime + (Mathf.Abs(buttonLocations[targetButton - 1] - buttonLocations[targetButton]) / playerSpeed)) {
+                        //AND if there is enough time to go below the original target bomb/belt and press that button and then return to the original target bomb/belt
+                        targetButton -= 1;
+                    }
                 }
             }
         }
@@ -150,6 +163,14 @@ public class AIScript_RockfordStoller : MonoBehaviour {
             mainScript.moveUp();
         }
 
+        bool onTargetButton = targetButton == currentIndex;//boolean used check that the AI character is at target
+
+        if (onTargetButton) {
+            mainScript.push();
+        }
+
+        #region stop along the way code
+        /*
         //boolean used to check if the AI character can stop to press button on the way to current most dangerous bomb/belt
         bool canStopBomb = (Mathf.Abs(mainScript.getCharacterLocation() - buttonLocations[targetButton]) / playerSpeed) + playerPressCooldownTime < bombDistances[targetButton] / bombSpeeds[targetButton];
         bool correctTarget = targetButton == currentIndex;//boolean used check that the AI character is at target
@@ -159,6 +180,8 @@ public class AIScript_RockfordStoller : MonoBehaviour {
                 mainScript.push();//push the button
             }
         }
+        */
+        #endregion
 
 
         #region simple backup code
