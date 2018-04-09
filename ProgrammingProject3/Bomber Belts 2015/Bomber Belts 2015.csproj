@@ -250,6 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Resources\AI Scripts\AI_AlanPrice2.cs" />
+    <Compile Include="Assets\Resources\AI Scripts\AI_BPark.cs" />
     <Compile Include="Assets\Resources\AI Scripts\AI_BriannaChen.cs" />
     <Compile Include="Assets\Resources\AI Scripts\AI_RBurns.cs" />
     <Compile Include="Assets\Resources\AI Scripts\AI_Sample.cs" />

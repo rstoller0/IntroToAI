@@ -81,7 +81,7 @@ public class AI_RBurns: MonoBehaviour
 			}
 		}
 		//print("Stop");
-		print (buttonCooldowns [5]);
+		//print (buttonCooldowns [5]);
 		
 		float currentTime = Mathf.Infinity;
 		foreach (int spot in Spots)
@@ -95,7 +95,7 @@ public class AI_RBurns: MonoBehaviour
 			}
 		}
 		
-		print (targetBelt);
+		//print (targetBelt);
 		
 		if (buttonLocations[targetBelt] < mainScript.getCharacterLocation())
 		{
